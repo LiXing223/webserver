@@ -65,8 +65,7 @@ void Log::write_log(int level, const char *format, ...)
     gettimeofday(&now, NULL);
     time_t t = now.tv_sec;
     struct tm *sys_tm = localtime(&t);
-    tm *sys_tm = localtime(&t);
-    tm my_tm = *sys_tm;
+    struct tm my_tm = *sys_tm;
     char s[16] = {0};
     switch (level) 
     {

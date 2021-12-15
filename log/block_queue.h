@@ -3,6 +3,7 @@
 
 #include "../lock/locker.h"
 #include <sys/time.h>
+#include <stdlib.h>
 
 template<typename T>
 class block_queue
@@ -14,7 +15,7 @@ public:
             exit(-1);
         }
         capacity_ = capacity;
-        array_ = new T[max_size];
+        array_ = new T[capacity];
         size_ = 0;
         front_ = -1;
         back_ = -1;
@@ -114,8 +115,9 @@ public:
         back_ = (back_ + 1) % capacity_;
         array_[back_] = item;
         size_++;
-        m_cond.broadcast();
+        cond_.broadcast();
         mutex_.unlock();
+        return true;
     }
 
     bool pop(T &item)
@@ -135,14 +137,14 @@ public:
         return true;
     }
 
-    bool pop(T &item, int ms_tinmeout)
+    bool pop(T &item, int ms_timeout)
     {
         timespec t = {0, 0};
         timeval now = {0, 0};
-        gettimeofday(now, NULL);
+        gettimeofday(&now, NULL);
         mutex_.lock();
         if(size_ <= 0) {
-            t.tv_sec = now.tv_sec + ms_tinmeout / 1000;
+            t.tv_sec = now.tv_sec + ms_timeout / 1000;
             t.tv_nsec = (now.tv_usec + ms_timeout % 1000) * 1000;
             if(!cond_.timewait(mutex_.get(), t)) {
                 mutex_.unlock();

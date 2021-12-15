@@ -28,6 +28,8 @@ public:
     MYSQL *GetConnection();
     bool ReleaseConnection(MYSQL *con);
     int GetFreeConn();
+
+private:
     void DestroyPool();
     
 private:

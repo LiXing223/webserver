@@ -108,7 +108,7 @@ private:
     int read_idx_;                      //当前已读取了多少字节的客户数据
     int check_idx_;                     //当前已经分析完了多少字节的客户数据
     int start_line_;                    //行在buffer中的起始位置
-    int write_buf_[WRITE_BUFFER_SIZE];  
+    char write_buf_[WRITE_BUFFER_SIZE];  
     int write_idx_;
     CHECK_STATE check_state_;
     METHOD method_;
@@ -118,12 +118,12 @@ private:
     char *host_;
     int content_length_;
     bool linger_;
-    char file_address_;
+    char *file_address_;
     struct stat file_stat_;
     struct iovec iv_[2];
     int iv_count_;
     int cgi_;        //是否启用
-    char *string_;  //存储请求头数据
+    char *string_;  //存储请求数据
     int bytes_to_send_;
     int bytes_have_send_;
     char *doc_root_;

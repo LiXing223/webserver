@@ -178,7 +178,7 @@ void Utils::sig_handle(int sig)
     errno = save_error;
 }
 
-void Utils::addsig(int sig, void(handler)(int), bool restart = true)
+void Utils::addsig(int sig, void(handler)(int), bool restart)
 {
     struct sigaction sa;
     memset(&sa, '\0', sizeof(sa));
@@ -205,7 +205,7 @@ void Utils::show_error(int connfd, const char *info)
 int *Utils::u_pipefd_ = 0;
 int Utils::u_epollfd_ = 0;
 
-void cd_func(client_data *user_data)
+void cb_func(client_data *user_data)
 {
     assert(user_data);  //lix添加
     epoll_ctl(Utils::u_epollfd_, EPOLL_CTL_DEL, user_data->sockfd, 0);

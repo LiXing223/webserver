@@ -16,3 +16,9 @@
 
 ## 三、框架
 <img src="./框架.png" width="100%">
+
+## 四、开发
+1. 安装mysql  
+[在Ubuntu 20.04上安装MySQL教程](https://www.cnblogs.com/2020javamianshibaodian/p/12920243.html)
+2. 安装mysql开发包
+sudo apt-get install libmysqlclient-dev
